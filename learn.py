@@ -1,8 +1,21 @@
+#!/usr/bin/env python3
 from datetime import datetime, timedelta
 
 from database import db_conn, select_one_value
 from contextlib import closing
 
+
+# ANSI escape codes for text colors
+class Colors:
+    RESET = '\033[0m'
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    CYAN = '\033[36m'
+    WHITE = '\033[37m'
 
 def new_words():
     return select_one_value("SELECT word_id FROM words WHERE progress=0 ORDER BY RANDOM() LIMIT 1")
@@ -43,10 +56,10 @@ def learn_word(word_id):
         print(word)
         given_translation = input("Answer:").strip()
         if translation == given_translation:
-            print("Yes")
+            print(Colors.GREEN + "Yes" + Colors.RESET)
             update_yes_progress(word_id)
         else:
-            print(f"No, correct: {translation}")
+            print(Colors.RED + f"No, correct: {translation}" + Colors.RESET)
             update_no_progress(word_id)
 
 

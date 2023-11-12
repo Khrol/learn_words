@@ -26,7 +26,9 @@ def init_db():
                 word_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 word TEXT NOT NULL,
                 translation TEXT NOT NULL,
-                progress INTEGER DEFAULT 0)
+                progress INTEGER DEFAULT 0,
+                CONSTRAINT unique_word unique (word)
+                )
             """)
             cursor.execute("""
             CREATE TABLE results(
