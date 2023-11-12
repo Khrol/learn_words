@@ -17,15 +17,16 @@ class Colors:
     CYAN = '\033[36m'
     WHITE = '\033[37m'
 
+
 def new_words():
     return select_one_value("SELECT word_id FROM words WHERE progress=0 ORDER BY RANDOM() LIMIT 1")
 
 
 def to_repeat_words(progress, interval):
-    ts_cutoff = (datetime.now() - interval).strftime('%Y-%m-%d %H:%M:%S')
+    ts_cutoff = datetime.utcnow() - interval
     return select_one_value("""
         SELECT words.word_id FROM words 
-        LEFT JOIN (SELECT max(timestamp) last_at, word_id FROM results) r on words.word_id = r.word_id
+        LEFT JOIN (SELECT max(timestamp) last_at, word_id FROM results GROUP BY word_id) r on words.word_id = r.word_id
         WHERE progress=? AND r.last_at < ?
         ORDER BY RANDOM() LIMIT 1
     """, (progress, ts_cutoff))
