@@ -4,14 +4,6 @@ from contextlib import closing
 DB_NAME = "learn_words.db"
 db_conn = sqlite3.connect(DB_NAME)
 
-'''
-progress:
-0 - to learn
-1 - repeat tomorrow
-2 - repeat in 7 days
-3 - repeat in 30 days
-4 - learned
-'''
 
 def init_db():
     with closing(db_conn.cursor()) as cursor:
@@ -27,7 +19,8 @@ def init_db():
                 word TEXT NOT NULL,
                 translation TEXT NOT NULL,
                 progress INTEGER DEFAULT 0,
-                CONSTRAINT unique_word unique (word)
+                CONSTRAINT unique_word unique (word),
+                CONSTRAINT unique_translation unique (translation)
                 )
             """)
             cursor.execute("""
