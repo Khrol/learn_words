@@ -60,7 +60,7 @@ def learn_word(word_id):
             print(Colors.GREEN + "Yes" + Colors.RESET)
             update_yes_progress(word_id)
         else:
-            print(Colors.RED + f"No, correct: {translation}" + Colors.RESET)
+            print(Colors.RED + f"No, correct: {Colors.CYAN + translation}" + Colors.RESET)
             update_no_progress(word_id)
 
 
