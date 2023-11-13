@@ -19,6 +19,7 @@ def init_db():
                 word TEXT NOT NULL,
                 translation TEXT NOT NULL,
                 progress INTEGER DEFAULT 0,
+                last_learned_at TIMESTAMP DEFAULT NULL,
                 CONSTRAINT unique_word unique (word),
                 CONSTRAINT unique_translation unique (translation)
                 )
