@@ -74,25 +74,15 @@ def learn_word(word_id):
 
 
 def words_to_learn(exclude):
-    if word_id := to_repeat_words(6, timedelta(days=32), exclude):
-        return word_id
-    if word_id := to_repeat_words(5, timedelta(days=16), exclude):
-        return word_id
-    if word_id := to_repeat_words(4, timedelta(days=8), exclude):
-        return word_id
-    if word_id := to_repeat_words(3, timedelta(days=4), exclude):
-        return word_id
-    if word_id := to_repeat_words(2, timedelta(days=2), exclude):
-        return word_id
-    if word_id := to_repeat_words(1, timedelta(days=1), exclude):
-        return word_id
+    for progress in range(10, 0, -1):
+        if word_id := to_repeat_words(progress, timedelta(days=2 ** (progress - 1)), exclude):
+            return word_id
     if word_id := new_words(exclude):
         return word_id
     return None
 
 
 TO_LEARN_AMOUNT = 10
-
 
 if __name__ == "__main__":
     to_learn = []
