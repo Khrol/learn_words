@@ -28,9 +28,8 @@ def new_words(exclude):
 def to_repeat_words(progress, interval, exclude):
     ts_cutoff = datetime.utcnow() - interval
     return select_one_value(f"""
-        SELECT words.word_id FROM words 
-        LEFT JOIN (SELECT max(timestamp) last_at, word_id FROM results GROUP BY word_id) r on words.word_id = r.word_id
-        WHERE progress=? AND r.last_at < ? AND words.word_id NOT IN ({','.join(['?' for _ in exclude])})
+        SELECT word_id FROM words 
+        WHERE progress=? AND last_learned_at < ? AND words.word_id NOT IN ({','.join(['?' for _ in exclude])})
         ORDER BY RANDOM() LIMIT 1
     """, [progress, ts_cutoff] + exclude)
 
